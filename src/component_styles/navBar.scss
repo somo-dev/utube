@@ -1,0 +1,14 @@
+$primary-colour: #00B074;
+$secondary-colour: #7C7C7D;
+a {
+    text-decoration: none;
+    color: $secondary-colour;
+    font-weight: 400;
+}
+
+a:hover,
+.active {
+    font-weight: 900;
+    color: $primary-colour;
+    text-decoration: solid;
+}
