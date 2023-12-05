@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ButtonList from "../components/ButtonList";
+import axios from "axios";
+import { POPULAR_VIDEO_LIST } from "../utils/constants";
+import { Item, VidProps } from "../utils/videoProps";
+import VideoCard from "../components/VideoCard";
 
 export interface ButtonListProps {
   text: string;
@@ -26,10 +30,30 @@ const Landing = () => {
       link: "/gaming",
     },
   ];
-  const [buttonList, setButtonList] = useState<ButtonListProps[]>(DUMMY_BUTTON_LIST);
+  const [buttonList, setButtonList] =
+    useState<ButtonListProps[]>(DUMMY_BUTTON_LIST);
+  const [videos, setVodeos] = useState<Item[]>([]);
+
+  const getPopularVideos = async () => {
+    const data = await axios
+      .get<VidProps>(POPULAR_VIDEO_LIST)
+      .then((res) => setVodeos(res.data.items))
+      .catch(Error);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getPopularVideos();
+  }, []);
+
   return (
     <>
       <ButtonList list={buttonList} />
+      <div className="flex flex-wrap justify-around">
+        {videos?.map((video: Item) => {
+          return <VideoCard key={video.id} info={video} />;
+        })}
+      </div>
     </>
   );
 };

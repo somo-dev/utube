@@ -47,7 +47,11 @@ const ButtonList: FC<ButtonListPropsType> = ({ list }) => {
       >
         {list?.map((button: ButtonListProps) => {
           return (
-            <NavLink to={button.link} className="px-2 my-auto">
+            <NavLink
+              key={button.text}
+              to={button.link}
+              className="px-2 my-auto"
+            >
               {(props) => (
                 <Button
                   color="warning"
