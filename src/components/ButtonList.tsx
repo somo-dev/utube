@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Button } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -50,17 +50,15 @@ const ButtonList: FC<ButtonListPropsType> = ({ list }) => {
             <NavLink
               key={button.text}
               to={button.link}
-              className="px-2 my-auto"
+              className="px-4 my-auto mx-4"
             >
               {(props) => (
-                <Button
-                  color="warning"
-                  disableElevation
-                  size="small"
-                  variant={props.isActive ? "contained" : "outlined"}
-                >
-                  {button.text}
-                </Button>
+                <Chip
+                  className="px-4"
+                  label={button.text}
+                  variant={props.isActive ? "filled" : "outlined"}
+                  onClick={undefined}
+                />
               )}
             </NavLink>
           );

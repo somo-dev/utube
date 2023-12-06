@@ -29,6 +29,34 @@ const Landing = () => {
       text: "Gaming",
       link: "/gaming",
     },
+    {
+      text: "Live",
+      link: "/live",
+    },
+    {
+      text: "Soccer",
+      link: "/soccer",
+    },
+    {
+      text: "Cricket",
+      link: "/cricket",
+    },
+    {
+      text: "Cooking",
+      link: "/cooking",
+    },
+    {
+      text: "Music",
+      link: "/music",
+    },
+    {
+      text: "Tech",
+      link: "/tech",
+    },
+    {
+      text: "Vlog",
+      link: "/vlod",
+    },
   ];
   const [buttonList, setButtonList] =
     useState<ButtonListProps[]>(DUMMY_BUTTON_LIST);
@@ -49,7 +77,7 @@ const Landing = () => {
   return (
     <>
       <ButtonList list={buttonList} />
-      <div className="flex flex-wrap justify-around">
+      <div className="flex flex-wrap justify-around mt-3">
         {videos?.map((video: Item) => {
           return <VideoCard key={video.id} info={video} />;
         })}

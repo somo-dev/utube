@@ -34,7 +34,20 @@ export const getDateDifference = (dateString: string): string => {
     }
 }
 
-// Example usage:
-const dateInput = '2023-12-04T23:07:10Z';
-const difference = getDateDifference(dateInput);
-console.log(`The difference is: ${difference}`);
+export const formatNumberAbbreviated = (value: number | string): string => {
+    const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(numericValue)) {
+        // Return the original string if parsing fails
+        return value.toString();
+    }
+
+    const absValue = Math.abs(numericValue);
+
+    if (absValue >= 1e6) {
+        return (absValue / 1e6).toFixed(1) + 'M';
+    } else if (absValue >= 1e3) {
+        return (absValue / 1e3).toFixed(1) + 'k';
+    } else {
+        return numericValue.toString();
+    }
+}

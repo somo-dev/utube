@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { getDateDifference } from "../utils/helperFucntions";
+import { formatNumberAbbreviated, getDateDifference } from "../utils/helperFucntions";
 
 interface VideoCardProps {
   info: Item;
@@ -26,7 +26,7 @@ const VideoCard: FC<VideoCardProps> = ({ info }) => {
   const dateDif = getDateDifference(snippet.publishedAt);
 
   return (
-    <Card sx={{ maxWidth: 300 }} className="mb-12">
+    <Card sx={{ maxWidth: 300 }} className="mb-12 mx-4">
       <CardActionArea>
         <CardMedia
           component="img"
@@ -37,7 +37,7 @@ const VideoCard: FC<VideoCardProps> = ({ info }) => {
       </CardActionArea>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "wheat" }} aria-label="profile-icon">
+          <Avatar sx={{ bgcolor: "#C36F62" }} aria-label="profile-icon">
             {channelTitle.charAt(0)}
           </Avatar>
         }
@@ -49,13 +49,10 @@ const VideoCard: FC<VideoCardProps> = ({ info }) => {
         title={title}
         subheader={channelTitle}
       />
-      <Typography variant="body2" color="text.secondary">
-        {`${statistics?.viewCount} views | ${dateDif}`}
-      </Typography>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
+      <CardActions className="mx-2">
+        <Typography variant="body2" color="text.secondary" >
+          {`${formatNumberAbbreviated(statistics?.viewCount)} views | ${dateDif}`}
+        </Typography>
       </CardActions>
     </Card>
   );
