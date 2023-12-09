@@ -4,6 +4,8 @@ import "./App.css";
 import Layout from "./layout/Layout";
 import Landing from "./pages/Landing";
 import WatchVideo from "./pages/WatchVideo";
+import LikedVideos from "./pages/LikedVideos";
+import WatchLater from "./pages/WatchLater";
 
 function App() {
   const routes = createBrowserRouter([
@@ -12,7 +14,9 @@ function App() {
       element: <Layout />,
       children: [
         { index: true, element: <Landing /> },
-        { path: "watch?videoId=:vidId", element: <WatchVideo /> },
+        { path: "watch?v=:vidId", element: <WatchVideo /> },
+        { path: "likedVids", element: <LikedVideos /> },
+        { path: "watchLater", element: <WatchLater /> },
       ],
     },
   ]);

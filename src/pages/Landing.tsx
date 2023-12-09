@@ -61,16 +61,21 @@ const Landing = () => {
   const [buttonList, setButtonList] =
     useState<ButtonListProps[]>(DUMMY_BUTTON_LIST);
   const [videos, setVodeos] = useState<Item[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getPopularVideos = async () => {
     const data = await axios
       .get<VidProps>(POPULAR_VIDEO_LIST)
-      .then((res) => setVodeos(res.data.items))
+      .then((res) => {
+        setVodeos(res.data.items);
+        setIsLoading(false);
+      })
       .catch(Error);
     console.log(data);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getPopularVideos();
   }, []);
 
@@ -79,7 +84,9 @@ const Landing = () => {
       <ButtonList list={buttonList} />
       <div className="flex flex-wrap justify-around mt-3">
         {videos?.map((video: Item) => {
-          return <VideoCard key={video.id} info={video} />;
+          return (
+            <VideoCard key={video.id} info={video} isLoading={isLoading} />
+          );
         })}
       </div>
     </>

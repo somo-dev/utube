@@ -1,0 +1,22 @@
+.scrollable-container {
+    max-width: 80vw ;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    white-space: nowrap; /* Prevent text wrapping to the next line */
+    &:hover {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}
+
+.scrollable-content {
+    /* Add your content styling here */
+    padding: 10px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
