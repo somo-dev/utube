@@ -24,6 +24,9 @@ import {
 import axios from "axios";
 import { SEARCH_SUGGESTION_LIST } from "../utils/constants";
 import { StarBorder } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { StorePropsType } from "../store";
+import { cacheResults } from "../store/search-slice";
 
 interface NavBarProps {
   handleDrawerOpen: () => void;
@@ -45,6 +48,8 @@ const NavBar: FC<NavBarProps> = ({ handleDrawerOpen, open }) => {
   const [options, setOptions] = useState<string[]>([]);
   const [drop, setDrop] = useState<boolean>(false);
   const loading = open && options.length === 0;
+  const searchCache = useSelector((store: StorePropsType) => store.search);
+  const dispatch = useDispatch();
 
   // const sleep = (duration: number): Promise<void> => {
   //   return new Promise<void>((resolve) => {
@@ -59,21 +64,34 @@ const NavBar: FC<NavBarProps> = ({ handleDrawerOpen, open }) => {
 
     setSearchQuery(value);
   };
+  const getSearchSugegstions = () => {
+    axios
+      .get<SearchData>(SEARCH_SUGGESTION_LIST + searchQuery)
+      .then((res) => {
+        setOptions(res.data[1]);
+
+        dispatch(
+          cacheResults({
+            [searchQuery]: res.data[1],
+          })
+        );
+
+        if (res.data[1].length > 2) {
+          setDrop(true);
+        } else setDrop(false);
+      })
+      .catch(Error);
+  };
 
   useEffect(() => {
-    const timer = setTimeout(
-      () =>
-        axios
-          .get<SearchData>(SEARCH_SUGGESTION_LIST + searchQuery)
-          .then((res) => {
-            setOptions(res.data[1]);
-            if (res.data[1].length > 2) {
-              setDrop(true);
-            } else setDrop(false);
-          })
-          .catch(Error),
-      200
-    );
+    const timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setOptions(searchCache[searchQuery]);
+        setDrop(true);
+      } else {
+        getSearchSugegstions();
+      }
+    }, 200);
 
     return () => {
       clearTimeout(timer);
